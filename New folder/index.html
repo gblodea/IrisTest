@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRISapp Prototype</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f1;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      max-height: fit-content;
+    }
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #3e8e41;
+      padding: 0.5rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      padding: 1rem;
+    }
+    .hidden {
+      display: none;
+    }
+    input, select, button {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .result {
+      background: #e0f7e9;
+      padding: 1rem;
+      border: 1px solid #b2d8c2;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="./WhatsApp_Image_2025-04-05_at_11.18.16_2c61b3d1-removebg-preview.png" alt="LOGO" width="200">
+    <p>Intelligent Remote irrigation System</p>
+  </header>
+  <nav>
+    <a href="#" onclick="showPage('accueil')">Accueil</a>
+    <a href="#" onclick="showPage('calculateur')">Calculateur</a>
+    <a href="#" onclick="showPage('historique')">Historique</a>
+    <a href="#" onclick="showPage('inscription')">Inscription</a>
+  </nav>
+
+  <div class="container">
+    <div id="accueil">
+      <h2>Bienvenue sur IRISapp</h2>
+      <p>Votre solution d'irrigation goutte-à-goutte intelligente et à distance 🌿💧</p>
+      <button onclick="showPage('calculateur')">Commencer</button>
+    </div>
+
+    <div id="calculateur" class="hidden">
+      <h2>Calculateur d'eau</h2>
+      <label>Superficie (en m²)</label>
+      <input type="number" id="superficie">
+      <label>Type de culture</label>
+      <select id="culture">
+        <option value="5">Tomate (5 L/m²/jour)</option>
+        <option value="6">Maïs (6 L/m²/jour)</option>
+        <option value="10">Riz (10 L/m²/jour)</option>
+        <option value="3">Laitue (3 L/m²/jour)</option>
+      </select>
+      <label>Fréquence (jours/semaine)</label>
+      <input type="number" id="frequence">
+      <button onclick="calculerEau()">Calculer</button>
+      <div id="resultat" class="result hidden"></div>
+    </div>
+
+    <div id="historique" class="hidden">
+      <h2>Historique</h2>
+      <p>Aucune donnée pour le moment.</p>
+    </div>
+
+    <div id="inscription" class="hidden">
+      <h2>Inscription</h2>
+      <label>Nom complet</label>
+      <input type="text">
+      <label>Email</label>
+      <input type="email">
+      <label>Mot de passe</label>
+      <input type="password">
+      <button>Créer un compte</button>
+    </div>
+  </div>
+
+  <script>
+    function showPage(pageId) {
+      const pages = ['accueil', 'calculateur', 'historique', 'inscription'];
+      pages.forEach(page => {
+        document.getElementById(page).classList.add('hidden');
+      });
+      document.getElementById(pageId).classList.remove('hidden');
+    }
+
+    function calculerEau() {
+      const superficie = parseFloat(document.getElementById('superficie').value);
+      const besoin = parseFloat(document.getElementById('culture').value);
+      const frequence = parseFloat(document.getElementById('frequence').value);
+      const resultat = superficie * besoin * frequence;
+      const div = document.getElementById('resultat');
+      div.innerHTML = `Besoin en eau : <strong>${resultat} litres</strong> par semaine.`;
+      div.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
